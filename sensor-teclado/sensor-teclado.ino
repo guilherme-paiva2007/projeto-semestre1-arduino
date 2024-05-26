@@ -20,8 +20,8 @@ char Teclas[4][4] = {
   {'*', '0', '#', 'D'}
 };
 
-byte Coluna_PINS[4] = {9, 8, 7, 6};
-byte Linha_PINS[4] = {5, 4, 3, 2};
+byte Coluna_PINS[4] = {5, 4, 3, 2};
+byte Linha_PINS[4] = {9, 8, 7, 6};
 byte Colunas = 4;
 byte Linhas = 4;
 
