@@ -43,6 +43,7 @@ void setup()
 void loop()
 {
   char tecla = Teclado.getKey();
+  String comando = ler();
   
   if (tecla && tecla != 'A' && tecla != 'B' && tecla != 'C' && tecla != 'D') { // Se pegar uma tecla nova, armazena ela
     if (trava_teclado == false) {
@@ -79,6 +80,11 @@ void loop()
     LCD.setCursor(0, 1);
     rgb(220, 100, 0);
   }
+
+  if (comando == "redefinir") {
+    modo = "redefinir";
+    entrada = "";
+  }
   
   if (entrada == "##*" && modo == "ocioso") { // Entra em modo de redefinir senha
   	entrada = "";
@@ -114,10 +120,10 @@ void loop()
   }
   
   if (entrada.length() >= 4 && modo == "redefinir") { // Mesmo do anterior, mas armazena a senha
-    EEPROM.write(0, entrada[0]);
-    EEPROM.write(1, entrada[1]);
-    EEPROM.write(2, entrada[2]);
-    EEPROM.write(3, entrada[3]);
+    EEPROM.write(0, int(entrada[0]));
+    EEPROM.write(1, int(entrada[1]));
+    EEPROM.write(2, int(entrada[2]));
+    EEPROM.write(3, int(entrada[3]));
     senha = "";
     senha.concat(char(EEPROM.read(0)));
   	senha.concat(char(EEPROM.read(1)));
@@ -132,4 +138,12 @@ void rgb(int red, int green, int blue) {
   analogWrite(L_Red, red);
   analogWrite(L_Green, green);
   analogWrite(L_Blue, blue);
+}
+
+String ler() {
+  String texto = "";
+  if (Serial.available()) {
+    texto = Serial.readStringUntil('\n');
+  }
+  return texto;
 }
